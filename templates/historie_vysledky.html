@@ -1,0 +1,126 @@
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <meta property="og:title" content="DelayTracker - ČD Most" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://most.odjezdy.online" />
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ETFJ0D4HZT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ETFJ0D4HZT');
+</script>
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #cbd5e0;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #2d3748;
+        }
+        .table-warning {
+            background-color: #ecc94b;
+            color: #1a202c;
+        }
+        .table-danger {
+            background-color: #f56565;
+            color: #cbd5e0;
+        }
+        .scrolling-text {
+            white-space: nowrap;
+            overflow: hidden;
+            box-sizing: border-box;
+            width: 50%;
+        }
+        .scrolling-text span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 10s linear infinite;
+        }
+        @keyframes scroll {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(-100%, 0);
+            }
+        }
+        .footer {
+            background-color: #2d3748;
+            color: #cbd5e0;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        @media (min-height: 500px) {
+            .footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carrierMap = {
+                'RJÚK': 'RegioJet ÚK',
+                'RCAS': 'Railway Capital',
+                'GWTR': 'GW Train',
+                'ČD': 'České Dráhy'
+            };
+            const carrierElement = document.getElementById('train-carrier');
+            const carrierCode = carrierElement.dataset.code;
+            carrierElement.textContent = carrierMap[carrierCode] || carrierCode;
+        });
+    </script>
+</head>
+<body>
+    {% extends 'historie.html' %}
+    {% block result %}
+        {% if train_info is defined and train_info|length > 0 %}
+            {% set train_carrier = train_info[0][3].split(',') %}
+            <div class="ps-3 pt-3 pe-3 mb-3 col-auto">
+                <h3 id="train-carrier" class="text-primary fw-bold" data-code="{{ train_carrier[0] }}"></h3>
+                <h4 class="text-info">Pravidelný příjezd: {{ train_datetimes[0].strftime('%H:%M') }}</h4>
+                <h5 class="text-secondary fw-light scrolling-text"><span>&gt;&gt; ze směru {{ train_info[0][4] }}</span></h5>
+                <p class="text-secondary fw-light">Dopravce: {{ train_carrier[1] }}</p>
+            </div>
+        {% endif %}
+        <div class="container-fluid overflow-auto ps-3 pb-3 pe-3">
+            <div class="col-auto mb-3">
+                <table id="trains" class="table-auto w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-700 text-gray-300">
+                            <th class="px-4 py-2">Datum</th>
+                            <th class="px-4 py-2">Skutečný příjezd</th>
+                            <th class="px-4 py-2">Zpoždění</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for train in train_info %}
+                        {% if train[5] < 5 %}
+                            {% set trclass = '' %}
+                        {% elif train[5] < 10 %}
+                            {% set trclass = 'table-warning' %}
+                        {% else %}
+                            {% set trclass = 'table-danger' %}
+                        {% endif %}
+                        <tr class="{{ trclass }}">
+                            <td class="border px-4 py-2">{{ train_datetimes[loop.index0].strftime('%d.%m.') }}</td>
+                            <td class="border px-4 py-2">{{ real_arrivals[loop.index0] }}</td>
+                            <td class="border px-4 py-2">{{ train[5] }} minut</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="footer">
+            Data z <a href="https://cd.cz" class="text-blue-400">ČD</a> ze zastávky Most | Originální kód: <a href="https://github.com/Sap1k/delayTracker_CzechRail" class="text-blue-400">https://github.com/Sap1k/delayTracker_CzechRail</a> | <a href="https://odjezdy.online" class="text-blue-400">Zpět na hlavní stránku</a>
+        </footer>
+    {% endblock %}
+</body>
+</html>

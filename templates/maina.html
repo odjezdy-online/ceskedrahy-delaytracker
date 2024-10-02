@@ -1,0 +1,165 @@
+<html lang="cs">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>DelayTracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta property="og:title" content="DelayTracker - ČD Most" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://most.odjezdy.online" />
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ETFJ0D4HZT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ETFJ0D4HZT');
+</script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #cbd5e0;
+        }
+        .bg-dark {
+            background-color: #2d3748;
+        }
+        .bg-darker {
+            background-color: #1a202c;
+        }
+        .text-primary {
+            color: #63b3ed;
+        }
+        .text-secondary {
+            color: #a0aec0;
+        }
+        .text-dopravce {
+            color: #e2e8f0;
+        }
+        .text-green {
+            color: #48bb78;
+        }
+        .text-orange {
+            color: #ed8936;
+        }
+        .text-red {
+            color: #f56565;
+        }
+        .text-purple {
+            color: #9f7aea;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <nav class="bg-dark p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a class="text-primary text-xl font-bold" href="/">DelayTracker</a>
+            <div class="space-x-4">
+                <a class="text-secondary hover:text-primary" href="/">Přehled zpoždění</a>
+                <a class="text-secondary hover:text-primary" href="/historie">Historické zpoždění</a>
+            </div>
+        </div>
+    </nav>
+
+    <form class="container mx-auto p-4 flex space-x-4" method="get" action="/">
+        <div>
+            <label for="date" class="block text-secondary">Datum</label>
+            <input type="date" class="form-control bg-dark text-secondary border-none" id="date" name="date" value="{{ datetime[0] }}">
+        </div>
+        <div>
+            <label for="time" class="block text-secondary">Čas</label>
+            <input type="time" class="form-control bg-dark text-secondary border-none" id="time" name="time" value="{{ datetime[1] }}">
+            <div class="text-xs text-secondary">Zobrazí vlaky co skutečně odjely po tomto čase</div>
+        </div>
+        <div class="self-end">
+            <button type="submit" class="bg-primary text-dark py-2 px-4 rounded">Zobrazit příjezdy</button>
+        </div>
+    </form>
+
+    <div class="container mx-auto p-4 flex-grow overflow-auto">
+        {% if trains == [] %}
+            <h3 class="text-red font-bold mt-4">Zadaným parametrům neodpovídá žádný vlak!</h3>
+        {% endif %}
+        {% for train in trains %}
+            {% set train_carrier = train[3].split(',') %}
+            {% if train[5] < 3 %}
+                {% set delay_color = 'text-green' %}
+            {% elif train[5] < 10 %}
+                {% set delay_color = 'text-orange' %}
+            {% elif train[5] < 30 %}
+                {% set delay_color = 'text-red' %}
+            {% else %}
+                {% set delay_color = 'text-purple' %}
+            {% endif %}
+            {% if loop.index0 % 2 == 1 %}
+                {% set bg_class = 'bg-darker' %}
+            {% else %}
+                {% set bg_class = 'bg-dark' %}
+            {% endif %}
+            <div class="p-4 {{ bg_class }} rounded mb-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="train_name text-primary">{{ train_carrier[0] }}</h3>
+                        <h5 class="text-secondary">&gt;&gt; ze směru {{ train[4] }}</h5>
+                        <p class="text-dopravce carrier-name">Dopravce: {{ train_carrier[1] }}</p>
+                    </div>
+                    <div>
+                        <p class="text-secondary">Plánovaný příjezd: {{ train[6][11:16] }} // Skutečný: {{ real_arrivals[loop.index0] }}</p>
+                        <p class="text-secondary platform" data-train-num="{{ train[1] }}">Načítám nástupiště...</p>
+                        <p class="{{ delay_color }}">Zpoždění {{ train[5] }} minut</p>
+                        <a class="text-primary hover:underline" href="/historie?train_num={{ train[1] }}">Zobrazit zpoždění v posledních 14 dnech</a> <span class="text-secondary">//</span>
+                        <a class="text-primary hover:underline" href="{{ train[7] }}">Zobrazit detaily spoje</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <footer class="bg-dark p-4 text-center text-secondary">
+        Data z <a class="text-primary hover:underline" href="https://cd.cz">ČD</a> ze zastávky Most | Originální kód: <a class="text-primary hover:underline" href="https://github.com/Sap1k/delayTracker_CzechRail">https://github.com/Sap1k/delayTracker_CzechRail</a> | <a class="text-primary hover:underline" href="https://odjezdy.online">Zpět na hlavní stránku</a>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carrierMap = {
+                'RJÚK': '<a class=hover:underline href="https://regiojet.cz/kam-jezdime/ustecky-kraj">RegioJet ÚK</a>',
+                'RCAS': '<a class=hover:underline href="https://railwaycapital.cz/">Railway Capital</a>',
+                'DLB': '<a class=hover:underline href="https://www.laenderbahn.cz/">Die Länderbahn CZ</a>',
+                'ČD': '<a class=hover:underline href="https://cd.cz">České Dráhy</a>',
+                'GWTR': '<a class=hover:underline href="https://www.gwtr.cz/">GW Train</a>',
+                'AŽD': '<a class=hover:underline href="https://www.azdvlaky.cz/">AŽD Vlaky</a>'
+                // Add other carrier mappings here
+            };
+    
+            document.querySelectorAll('.carrier-name').forEach(function(element) {
+                const shortCode = element.textContent.split(': ')[1].trim();
+                if (carrierMap[shortCode]) {
+                    element.innerHTML = 'Dopravce: ' + carrierMap[shortCode];
+                }
+            });
+
+            // Fetch platform info for each train
+            document.querySelectorAll('.platform').forEach(function (element) {
+                const trainNum = element.getAttribute('data-train-num');
+                fetch(`/nastupiste/${trainNum}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.platform && data.platform !== 'N/A') {
+                            element.textContent = `${data.platform}`;
+                        } else {
+                            element.textContent = 'Nástupiště není k dispozici';
+                        }
+                    })
+                    .catch(() => {
+                        element.textContent = 'Nástupiště nelze načíst';
+                    });
+            });
+        });
+    </script>
+    
+</body>
+</html>

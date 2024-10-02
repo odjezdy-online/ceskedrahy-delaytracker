@@ -56,7 +56,10 @@ Tímto způsobem můžete sledovat vlaky z jakékoli stanice.
 - APScheduler
 - Requests
 
+## Původní práce
+
+Původní práce je k dispozici na [GitHubu](https://github.com/Sap1k/delayTracker_CzechRail). Zbytek byl upraven mnou a z části také ChatGPT 4o/4o-mini.
+
 ## Licence
 
 Tento projekt je licencován pod MIT licencí.
-

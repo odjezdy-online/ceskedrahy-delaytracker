@@ -3,6 +3,8 @@
 
 Aplikace **České Dráhy Delay Tracker** slouží k monitorování zpoždění vlaků Českých drah. Pravidelně stahuje data z API a ukládá informace o vlacích do SQLite databáze, včetně zpoždění, nástupišť a skutečných časů příjezdů.
 
+# Demo
+Demo aplikace naleznete pro stanici [Bílina](https://bilina.odjezdy.online) a [Most](https://most.odjezdy.online). 
 ## Funkce
 
 - Automatické stahování dat o zpoždění vlaků z API Českých drah každou minutu.

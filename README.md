@@ -74,9 +74,7 @@
 - ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 - ![APScheduler](https://img.shields.io/badge/APScheduler-blue?style=for-the-badge)
 
-## 🔧 Instalace
 
-1. Naklonujte tento repozitář:
-
-   ```bash
-   git clone https://github.com/uzivatel/ceskedrahy-delaytracker.git
+## 🤭💰 Donate
+[Ko-Fi.com](https://ko-fi.com/vlastimilnovotny)
+[PayPal.Me](https://paypal.me/mxnticek)

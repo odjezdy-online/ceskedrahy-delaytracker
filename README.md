@@ -18,7 +18,7 @@ Demo aplikace naleznete pro stanici [Bílina](https://bilina.odjezdy.online) a [
 1. Naklonujte tento repozitář:
 
    ```bash
-   git clone https://github.com/uzivatel/ceskedrahy-delaytracker.git
+   git clone https://github.com/odjezdy-online/ceskedrahy-delaytracker.git
    ```
 
 2. Nainstalujte potřebné Python balíčky:
@@ -60,7 +60,7 @@ Tímto způsobem můžete sledovat vlaky z jakékoli stanice.
 
 ## Původní práce
 
-Původní práce je k dispozici na [GitHubu](https://github.com/Sap1k/delayTracker_CzechRail). Zbytek byl upraven mnou a z části také ChatGPT 4o/4o-mini.
+Původní práce je k dispozici na [GitHubu uživatele Sap1k](https://github.com/Sap1k/delayTracker_CzechRail). Zbytek byl upraven mnou a z části také ChatGPT 4o/4o-mini.
 
 ## Licence
 

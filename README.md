@@ -1,6 +1,5 @@
 <h1 align="center">🚆 České Dráhy Delay Tracker 🚆</h1>
 
-
 <p align="center">
   <a href="https://github.com/Sap1k/delayTracker_CzechRail">
     <img src="https://img.shields.io/badge/Original-Repository-blue?style=flat-square" alt="Original Repo">
@@ -19,6 +18,26 @@
   <li>📊 <strong>Zobrazení historie zpoždění</strong> jednotlivých vlaků.</li>
   <li>📝 <strong>Logování</strong> příchozích požadavků, včetně IP adresy.</li>
 </ul>
+
+<h2 align="center">📦 Technologie</h2>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
+  <img src="https://img.shields.io/badge/APScheduler-blue?style=for-the-badge" alt="APScheduler">
+</p>
+
+<h2 align="center">🤭💰 Donate</h2>
+
+<p align="center">
+  <a href="https://ko-fi.com/N4N225KML">
+    <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi">
+  </a>
+  <a href="https://paypal.me/mxnticek">
+    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate with PayPal">
+  </a>
+</p>
 
 <h2 align="center">⚙️ Instalace</h2>
 
@@ -58,23 +77,3 @@
 <p align="center">
   Tento projekt je licencován pod <a href="https://opensource.org/licenses/MIT">MIT licencí</a>.
 </p>
-
-## ✨ Funkce
-
-- ⏱️ **Automatické stahování** dat o zpoždění vlaků z API Českých drah každou minutu.
-- 💾 **Ukládání informací o vlacích**, včetně plánovaných příjezdů, zpoždění a nástupišť, do SQLite databáze.
-- 🚉 **API** pro získání nástupiště konkrétního vlaku podle jeho čísla.
-- 📊 **Zobrazení historie** zpoždění jednotlivých vlaků.
-- 🔐 **Logování** příchozích požadavků, včetně IP adresy.
-
-## 📦 Technologie
-
-- ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-- ![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
-- ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-- ![APScheduler](https://img.shields.io/badge/APScheduler-blue?style=for-the-badge)
-
-
-## 🤭💰 Donate
-[Ko-Fi.com](https://ko-fi.com/vlastimilnovotny)
-[PayPal.Me](https://paypal.me/mxnticek)
